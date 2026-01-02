@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Analytics Dashboard</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Portfolio Analytics Dashboard</h1>
+            <p class="subtitle">Flask + APIs + Data Visualization</p>
+        </header>
+
+        <!-- Add Position Form -->
+        <div class="input-section">
+            <h2>Add New Position</h2>
+            <form id="add-position-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="ticker-input">Ticker Symbol</label>
+                        <input type="text" id="ticker-input" placeholder="e.g., AAPL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shares-input">Number of Shares</label>
+                        <input type="number" id="shares-input" placeholder="e.g., 100" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="purchase-price-input">Purchase Price ($)</label>
+                        <input type="number" id="purchase-price-input" placeholder="e.g., 150.00" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="current-price-input">Current Price ($)</label>
+                        <input type="number" id="current-price-input" placeholder="e.g., 175.50" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="add-btn">Add Position</button>
+                    <button type="button" class="clear-btn" onclick="clearAllPositions()">Clear All</button>
+                    <button type="button" class="sample-btn" onclick="loadSampleData()">Load Sample Data</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Portfolio Summary Cards -->
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Value</h3>
+                <p class="value" id="total-value">$0.00</p>
+            </div>
+            <div class="card">
+                <h3>Total Cost</h3>
+                <p class="value" id="total-cost">$0.00</p>
+            </div>
+            <div class="card">
+                <h3>Gain/Loss</h3>
+                <p class="value" id="gain-loss">$0.00</p>
+            </div>
+            <div class="card">
+                <h3>Overall Return</h3>
+                <p class="value" id="overall-return">0.00%</p>
+            </div>
+        </div>
+
+        <!-- Risk Metrics -->
+        <div class="metrics-section">
+            <h2>Risk & Performance Statistics</h2>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <span class="metric-label">Volatility:</span>
+                    <span class="metric-value" id="volatility">0.00</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Sharpe Ratio:</span>
+                    <span class="metric-value" id="sharpe-ratio">0.00</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Max Gain:</span>
+                    <span class="metric-value" id="max-gain">0.00%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Max Loss:</span>
+                    <span class="metric-value" id="max-loss">0.00%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Avg Return:</span>
+                    <span class="metric-value" id="avg-return">0.00%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Winning Positions:</span>
+                    <span class="metric-value" id="positive-positions">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Holdings Table -->
+        <div class="table-section">
+            <h2>Portfolio Holdings</h2>
+            <table id="portfolio-table">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Shares</th>
+                        <th>Purchase Price</th>
+                        <th>Current Price</th>
+                        <th>Total Value</th>
+                        <th>Total Cost</th>
+                        <th>Gain/Loss</th>
+                        <th>Return %</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="portfolio-tbody">
+                    <!-- Data will be populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h2>Portfolio Allocation</h2>
+                <canvas id="allocation-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Returns Distribution</h2>
+                <canvas id="returns-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Historical Price Chart -->
+        <div class="historical-section">
+            <h2>Historical Performance</h2>
+            <div class="ticker-selector">
+                <label for="ticker-select">Select Ticker:</label>
+                <select id="ticker-select">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+            <canvas id="historical-chart"></canvas>
+        </div>
+
+        <footer>
+            <p>Enter your portfolio positions above to see real-time analytics</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
